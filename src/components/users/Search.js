@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class Search extends Component {
   state = {
     text: '',
   };
+
+  static propTypes = {
+      searchUsers: PropTypes.func.isRequired
+  }
 
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -11,7 +16,9 @@ export class Search extends Component {
 
   onSubmit = (event) => {
       event.preventDefault();
-      console.log(this.state.text);
+      this.props.searchUsers(this.state.text);
+      // cleaning the form state
+      this.setState({ text: '' });
   }
 
   render() {
