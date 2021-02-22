@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // USERS COMPONENTS
 import Users from './components/users/Users';
 import Search from './components/users/Search';
+import User from './components/users/User';
 
 // LAYOUTS COMPONENTS
 import Navbar from './components/layout/Navbar';
@@ -20,6 +21,7 @@ class App extends Component {
     users: [],
     loading: false,
     alert: null,
+    user: {},
   };
 
   // => SEARCH GITHUB USERS
@@ -36,6 +38,20 @@ class App extends Component {
     });
   };
 
+  // => GET SINGLE GITHUB USER
+  getUser = async (username) => {
+    this.setState({ loading: true });
+
+    const res = await axios.get(
+      `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLINET_SECRET}`
+    );
+
+    this.setState({
+      user: res.data,
+      loading: false,
+    });
+  }
+
   // => CLEAR USERS FROM STATE
   clearUsers = () => this.setState({ users: [], loading: false });
 
@@ -49,7 +65,7 @@ class App extends Component {
   };
 
   render() {
-    const { users, loading } = this.state;
+    const { users, loading, user } = this.state;
 
     return (
       <Router>
@@ -73,6 +89,9 @@ class App extends Component {
                 )}
               />
               <Route exact path='/about' component={About} />
+              <Route exact path='/user/:login' render={props => (
+                <User {...props} getUser={this.getUser} user={user} loading={loading} />
+              )} />
             </Switch>
           </div>
         </div>
