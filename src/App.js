@@ -14,10 +14,10 @@ import { Alert } from './components/layout/Alert';
 import { About } from './components/pages/About';
 
 import axios from 'axios';
+import GithubState from './context/github/GithubState';
 import './App.css';
 
 const App = () => {
-
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
@@ -64,18 +64,19 @@ const App = () => {
   const clearUsers = () => {
     setUsers([]);
     setLoading(false);
-  } 
+  };
 
   // => SET ALERT
   const alertMsg = (msg, type) => {
     setAlert({ msg, type });
 
     setTimeout(() => {
-      setAlert(null)
+      setAlert(null);
     }, 5000);
   };
 
-    return (
+  return (
+    <GithubState>
       <Router>
         <div className='App'>
           <Navbar />
@@ -116,7 +117,8 @@ const App = () => {
           </div>
         </div>
       </Router>
-    );
-  }
+    </GithubState>
+  );
+};
 
 export default App;
