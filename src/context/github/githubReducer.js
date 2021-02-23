@@ -29,6 +29,13 @@ export default (state, action) => {
         loading: false,
       };
 
+    case GET_REPOS:
+      return {
+        ...state,
+        repos: [],
+        loading: false,
+      };
+
     case SET_LOADING:
       return {
         ...state,
