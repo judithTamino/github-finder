@@ -1,23 +1,18 @@
 import React, { useState, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-// USERS COMPONENTS
-import Users from './components/users/Users';
-import Search from './components/users/Search';
-import User from './components/users/User';
-
-// LAYOUTS COMPONENTS
 import Navbar from './components/layout/Navbar';
+import Users from './components/users/Users';
+import User from './components/users/User';
+import Search from './components/users/Search';
 import { Alert } from './components/layout/Alert';
-
-// PAGES COMPONENTS
 import { About } from './components/pages/About';
-
 import axios from 'axios';
+
+import GithubState from './context/github/GithubState';
+
 import './App.css';
 
 const App = () => {
-
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
@@ -64,18 +59,19 @@ const App = () => {
   const clearUsers = () => {
     setUsers([]);
     setLoading(false);
-  } 
+  };
 
   // => SET ALERT
   const alertMsg = (msg, type) => {
     setAlert({ msg, type });
 
     setTimeout(() => {
-      setAlert(null)
+      setAlert(null);
     }, 5000);
   };
 
-    return (
+  return (
+    <GithubState>
       <Router>
         <div className='App'>
           <Navbar />
@@ -116,7 +112,8 @@ const App = () => {
           </div>
         </div>
       </Router>
-    );
-  }
+    </GithubState>
+  );
+};
 
 export default App;
