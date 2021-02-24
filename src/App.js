@@ -6,6 +6,7 @@ import User from './components/users/User';
 import Search from './components/users/Search';
 import { Alert } from './components/layout/Alert';
 import { About } from './components/pages/About';
+<<<<<<< HEAD
 import axios from 'axios';
 
 import GithubState from './context/github/GithubState';
@@ -61,6 +62,14 @@ const App = () => {
     setLoading(false);
   };
 
+=======
+import GithubState from './context/github/GithubState';
+import './App.css';
+
+const App = () => {
+  const [alert, setAlert] = useState(null);
+
+>>>>>>> 5865aa20cf0b70aa82e1d4ff044c234cecbd0a5c
   // => SET ALERT
   const alertMsg = (msg, type) => {
     setAlert({ msg, type });
@@ -83,31 +92,13 @@ const App = () => {
                 path='/'
                 render={(props) => (
                   <Fragment>
-                    <Search
-                      searchUsers={searchUsers}
-                      clearUsers={clearUsers}
-                      showClear={users.length > 0 ? true : false}
-                      setAlert={alertMsg}
-                    />
-                    <Users loading={loading} users={users} />
+                    <Search setAlert={alertMsg}/>
+                    <Users/>
                   </Fragment>
                 )}
               />
               <Route exact path='/about' component={About} />
-              <Route
-                exact
-                path='/user/:login'
-                render={(props) => (
-                  <User
-                    {...props}
-                    getUser={getUser}
-                    user={user}
-                    loading={loading}
-                    getUserRepos={getUserRepos}
-                    repos={repos}
-                  />
-                )}
-              />
+              <Route exact path='/user/:login' component={User} />
             </Switch>
           </div>
         </div>
